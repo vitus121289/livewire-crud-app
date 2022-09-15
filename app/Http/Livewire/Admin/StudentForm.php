@@ -22,7 +22,7 @@ class StudentForm extends Component
         'middle_name' => 'required|min:2|max:255',
         'last_name' => 'required|min:2|max:255',
         'photo' => 'image',
-        'section' => 'min:6|max:255',
+        'section' => 'max:255',
         'address' => 'required|min:6|max:255'
     ];
 
