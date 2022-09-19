@@ -54,9 +54,9 @@ class StudentController extends Controller
 
     private function validateStudent(?Student $student = null) {
         return request()->validate([
-            'first_name' => ['required', 'min:3', 'max:255'],
-            'middle_name' => ['required', 'min:3', 'max:255'],
-            'last_name' => ['required', 'min:3', 'max:255'],
+            'first_name' => ['required', 'min:2', 'max:255'],
+            'middle_name' => ['required', 'min:2', 'max:255'],
+            'last_name' => ['required', 'min:2', 'max:255'],
             'birthdate' => ['required', 'date'],
             'photo' => is_null($student) ? ['required', 'image'] : 'image',
             'section' => 'max:255',
