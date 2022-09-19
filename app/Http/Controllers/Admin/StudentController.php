@@ -25,7 +25,7 @@ class StudentController extends Controller
 
         Student::create($attributes);
 
-        return redirect('admin/students');
+        return redirect('admin/students')->with('success', 'Added student.');
     }
 
     public function edit(Student $student) {
@@ -43,13 +43,13 @@ class StudentController extends Controller
 
         $student->update($attributes);
 
-        return redirect('admin/students');
+        return redirect('admin/students')->with('success', 'Student updated.');
     }
 
     public function destroy(Student $student) {
         $student->delete();
 
-        return redirect('admin/students');
+        return back()->with('success', 'Student deleted.');
     }
 
     private function validateStudent(?Student $student = null) {
