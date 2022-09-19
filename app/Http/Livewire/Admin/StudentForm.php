@@ -21,6 +21,7 @@ class StudentForm extends Component
         'first_name' => 'required|min:2|max:255',
         'middle_name' => 'required|min:2|max:255',
         'last_name' => 'required|min:2|max:255',
+        'birthdate' => 'required|date',
         'photo' => 'image',
         'section' => 'max:255',
         'address' => 'required|min:6|max:255'
