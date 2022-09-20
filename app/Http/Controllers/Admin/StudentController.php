@@ -19,13 +19,17 @@ class StudentController extends Controller
     }
 
     public function store() {
-        $attributes = $this->validateStudent();
+        $attributes = $this->validateFields();
 
-        $attributes['photo'] = request()->file('photo')->store('student_ids');
+        if ($this->checkForDuplicateFullname()) {
+            return back()->with('fail', 'Student already exists');
+        } else {
+            $attributes['photo'] = request()->file('photo')->store('student_ids');
 
-        Student::create($attributes);
+            Student::create($attributes);
 
-        return redirect('admin/students')->with('success', 'Added student.');
+            return redirect('admin/students')->with('success', 'Added student.');
+        }
     }
 
     public function edit(Student $student) {
@@ -35,7 +39,7 @@ class StudentController extends Controller
     }
 
     public function update(Student $student) {
-        $attributes = $this->validateStudent($student);
+        $attributes = $this->validateFields($student);
 
         if (isset($attributes['photo'])) {
             $attributes['photo'] = request()->file('photo')->store('student_ids');
@@ -52,7 +56,7 @@ class StudentController extends Controller
         return back()->with('success', 'Student deleted.');
     }
 
-    private function validateStudent(?Student $student = null) {
+    private function validateFields(?Student $student = null) {
         return request()->validate([
             'first_name' => ['required', 'min:2', 'max:255'],
             'middle_name' => ['required', 'min:2', 'max:255'],
@@ -62,5 +66,12 @@ class StudentController extends Controller
             'section' => 'max:255',
             'address' => ['required', 'min:6', 'max:255']
         ]);
+    }
+
+    private function checkForDuplicateFullname() {
+        return Student::where('first_name', request()->first_name)
+                        ->where('middle_name', request()->middle_name)
+                        ->where('last_name', request()->last_name)
+                        ->exists();
     }
 }
