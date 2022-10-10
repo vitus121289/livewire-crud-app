@@ -1,5 +1,10 @@
 @props(['student'])
 <tr>
+    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm mx-auto">
+        <p class="text-gray-900 whitespace-no-wrap">
+            {{ $student->id }}
+        </p>
+    </td>
     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <div class="flex items-center">
             <div class="flex-shrink-0 w-10 h-10">
@@ -9,7 +14,7 @@
             </div>
             <div class="ml-3">
                 <p class="text-gray-900 whitespace-no-wrap">
-                    {{ $student->first_name . ' ' . $student->middle_name . ' ' . $student->last_name }}
+                    {{ $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name }}
                 </p>
             </div>
         </div>
@@ -30,28 +35,15 @@
         </p>
     </td>
     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p class="text-blue-500 whitespace-no-wrap">
-            <a href="/admin/students/{{ $student->id }}">Edit</a>
-        </p>
+        <div>
+            <p class="text-blue-500 whitespace-no-wrap">
+                <button wire:click="edit({{ $student->id }})">Edit</button>
+            </p>
+        </div>
     </td>
     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p class="text-red-500 whitespace-no-wrap">
-            <a
-                href="#"
-                x-data={}
-                @click.prevent="document.querySelector('#delete-form-{{ $student->id }}').submit()"
-            >
-                Delete
-            </a>
-            <form
-                action="/admin/students/{{ $student->id }}"
-                method="post"
-                id="delete-form-{{ $student->id }}"
-                hidden
-            >
-                @csrf
-                @method('DELETE')
-            </form>
+            <button wire:click="destroy({{ $student->id }})">Delete</button>
         </p>
     </td>
 </tr>
