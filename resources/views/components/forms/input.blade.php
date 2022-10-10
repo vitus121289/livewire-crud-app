@@ -1,6 +1,6 @@
 @props(['name'])
 <div>
-    <label for="{{ $name }}">{{ ucwords(str_replace('_', ' ', $name)) }}</label>
+    <label for="{{ $name }}">{{ ucwords(str_replace('_', ' ', str_replace('student.', '', $name))) }}</label>
     <input
         name="{{ $name }}"
         id="{{ $name }}"
